@@ -1,0 +1,13 @@
+-   params from .env
+-   read file and send
+-   cli args
+-   logs: winston
+-   send from dir
+-   send Haraka queue file
+-   send Haraka queue dir
+-   send via AWS SES
+-   send via sendGrid
+-   generate eml: template + json
+-   log to siem
+-   log to logstash
+-   log to db

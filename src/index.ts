@@ -1,41 +1,8 @@
-//accept: filepath, smtp params
+import { getArgs } from "./args.js";
+import { sendEmlFile } from "./smtp.js";
 
-import dotenv from 'dotenv'
-import nodemailer from 'nodemailer'
+const args = await getArgs();
 
-import { getArgs } from './args.js'
+const filename = "./queue/file.eml";
 
-dotenv.config()
-
-console.log(process.env)
-
-const args = await getArgs()
-
-const options = {
-    host: 'localhost',
-    port: 25,
-    // secure: true,
-    auth: {
-        user: 'user',
-        pass: 'pass',
-    },
-    connectionTimeout: 10000,
-}
-
-const transporter = nodemailer.createTransport(options)
-
-const envelope = {
-    from: 'sender@example.com',
-    to: ['recipient@example.com'],
-}
-
-const raw = `From: sender@example.com
-To: recipient@example.com
-Subject: greetings
-
-Salam Aleikum!`
-
-let message = { envelope, raw }
-
-// send email
-await transporter.sendMail(message)
+await sendEmlFile(filename, "sender@example.com", ["recipient@example.com"]);

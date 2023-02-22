@@ -21,6 +21,7 @@
     "license": "MIT",
     "dependencies": {
         "@types/nodemailer": "^6.4.7",
+        "dotenv": "^16.0.3",
         "nodemailer": "^6.9.1"
     }
 }

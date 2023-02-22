@@ -1,8 +1,13 @@
 //accept: filepath, smtp params
 
+import dotenv from 'dotenv'
 import nodemailer from 'nodemailer'
 
 import { getArgs } from './args.js'
+
+dotenv.config()
+
+console.log(process.env)
 
 const args = await getArgs()
 

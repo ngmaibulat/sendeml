@@ -12,7 +12,23 @@
 ### Send via API:
 
 - send via AWS SES
-- send via sendGrid
+- send via sendGrid: https://docs.sendgrid.com/api-reference/mail-send/mail-send
+- https://rapidapi.com/blog/email-apis-which-one-is-right-for-you/
+
+### From API
+
+- REST API poll
+- GraphQL query
+- GPRC
+
+### From/To Queue
+
+- Kafka
+- RabbitMQ
+- NATS
+- BullJS
+- AWS SQS
+- AWS ANS
 
 ### Templates:
 

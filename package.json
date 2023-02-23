@@ -20,7 +20,10 @@
     "author": "Aibulat",
     "license": "MIT",
     "dependencies": {
+        "@aibulat/isfile": "^0.0.4",
+        "@colors/colors": "^1.5.0",
         "@types/nodemailer": "^6.4.7",
+        "commander": "^10.0.0",
         "dotenv": "^16.0.3",
         "nodemailer": "^6.9.1"
     }

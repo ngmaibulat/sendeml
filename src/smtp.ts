@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import { simpleParser, ParsedMail } from "mailparser";
 import { smtpAuth, smtpOptions, pingOptions } from "./types.js";
 import { isDir } from "./dir.js";
+import isFile from "@aibulat/isfile";
 
 dotenv.config();
 
@@ -99,8 +100,12 @@ export async function parseEmlDir(dirname: string) {
 
     for (const file of files) {
         const realPath = path.resolve(dirname, file);
-        const data = await parseEml(realPath);
-        arr.push(data);
+        const pathIsFile = await isFile(realPath);
+
+        if (pathIsFile) {
+            const data = await parseEml(realPath);
+            arr.push(data);
+        }
     }
 
     return arr;

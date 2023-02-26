@@ -2,8 +2,10 @@ import { Command } from "commander";
 import isFile from "@aibulat/isfile";
 
 import { sendEmlFile, smtpPing } from "./smtp.js";
+import { tableEmails } from "./table.js";
+import { parseEmlDir } from "./smtp.js";
 
-import { pingOptions, sendOptions } from "./types.js";
+import { pingOptions, sendOptions, lsOptions } from "./types.js";
 
 const program = new Command();
 
@@ -51,6 +53,17 @@ program
         }
 
         await sendEmlFile(options.file, options.sender, [options.rcpt]);
+    });
+
+program
+    .command("ls")
+    .description("List eml files in a dir")
+    .requiredOption("-d, --dir <dir>", "dir")
+    .action(async (options: lsOptions) => {
+        // console.log(options);
+        const data = await parseEmlDir(options.dir);
+        const output = tableEmails(data);
+        console.log(output);
     });
 
 program.parse();

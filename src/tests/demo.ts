@@ -13,11 +13,11 @@ function errorToObject(err: Error) {
     return JSON.parse(tmp);
 }
 
-async function divide() {
+async function asyncFail() {
     throw new Error("Division by zero");
 }
 
-assert.rejects(divide, {
+assert.rejects(asyncFail, {
     name: "Error",
     message: "Division by zero",
 });

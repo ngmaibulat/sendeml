@@ -1,5 +1,5 @@
-- view dir of eml files
 - generate PII with Faker
+- generate PCI with Faker
 - send from dir
 - hview
 - hsend

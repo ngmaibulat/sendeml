@@ -23,3 +23,7 @@ export type sendOptions = {
     rcpt: string;
     file: string;
 };
+
+export type lsOptions = {
+    dir: string;
+};

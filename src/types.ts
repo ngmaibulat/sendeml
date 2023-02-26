@@ -24,6 +24,13 @@ export type sendOptions = {
     file: string;
 };
 
+export type sendDirOptions = {
+    sender: string;
+    rcpt: string;
+    dir: string;
+    max?: number;
+};
+
 export type lsOptions = {
     dir: string;
 };

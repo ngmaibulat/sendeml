@@ -1,4 +1,6 @@
-import fs from "fs/promises";
+import fs from "node:fs/promises";
+import path from "node:path";
+import isFile from "@aibulat/isfile";
 
 export async function isDir(dirname: string): Promise<boolean> {
     if (!dirname) {
@@ -14,4 +16,30 @@ export async function isDir(dirname: string): Promise<boolean> {
         }
         throw err;
     }
+}
+
+export async function lsDir(dirname: string, filesOnly: boolean = false) {
+    const found = await isDir(dirname);
+
+    if (!found) {
+        throw new Error(`Directory not found: ${dirname}`);
+    }
+
+    const files = await fs.readdir(dirname);
+
+    if (filesOnly) {
+        const res = [];
+
+        for (const item of files) {
+            const rpath = path.resolve(dirname, item);
+            const checked = await isFile(rpath);
+            if (checked) {
+                res.push(rpath);
+            }
+        }
+
+        return res;
+    }
+
+    return files;
 }

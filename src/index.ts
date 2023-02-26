@@ -1,11 +1,12 @@
 import { Command } from "commander";
 import isFile from "@aibulat/isfile";
 
+import { isDir, lsDir } from "./dir.js";
 import { sendEmlFile, smtpPing } from "./smtp.js";
 import { tableEmails } from "./table.js";
 import { parseEmlDir } from "./smtp.js";
 
-import { pingOptions, sendOptions, lsOptions } from "./types.js";
+import { pingOptions, sendOptions, lsOptions, sendDirOptions } from "./types.js";
 
 const program = new Command();
 
@@ -53,6 +54,40 @@ program
         }
 
         await sendEmlFile(options.file, options.sender, [options.rcpt]);
+    });
+
+program
+    .command("senddir")
+    .description("Send eml files from a dir")
+    .requiredOption("-s, --sender <sender>", "sender address", "sender@example.com")
+    .requiredOption("-r, --rcpt <rcpt>", "recipient address", "recipient@example.com")
+    .requiredOption("-d, --dir <dir>", "directory with eml files")
+    .option("--max <max>", "Send first <max> amount of emails")
+    .action(async (options: sendDirOptions) => {
+        const dirFound = await isDir(options.dir);
+
+        if (!dirFound) {
+            console.error(`Dir not found: ${options.dir}`);
+            process.exit(1);
+        }
+
+        const files = await lsDir(options.dir, true);
+
+        let filesToProcess = [];
+
+        if (options.max) {
+            filesToProcess = files.slice(0, options.max);
+        } else {
+            filesToProcess = files;
+        }
+
+        // console.log(files);
+        // console.log(filesToProcess);
+
+        for (const item of filesToProcess) {
+            await sendEmlFile(item, options.sender, [options.rcpt]);
+            console.log(`Sent: ${item}`);
+        }
     });
 
 program

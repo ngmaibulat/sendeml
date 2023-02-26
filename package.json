@@ -23,15 +23,17 @@
   "dependencies": {
     "@aibulat/isfile": "^0.0.4",
     "@colors/colors": "^1.5.0",
-    "@types/mailparser": "^3.4.0",
-    "@types/nodemailer": "^6.4.7",
+    "@faker-js/faker": "^7.6.0",
     "cli-table3": "^0.6.3",
     "commander": "^10.0.0",
     "dotenv": "^16.0.3",
+    "emailjs": "^4.0.1",
     "mailparser": "^3.6.3",
     "nodemailer": "^6.9.1"
   },
   "devDependencies": {
+    "@types/mailparser": "^3.4.0",
+    "@types/nodemailer": "^6.4.7",
     "tap-spec": "^5.0.0"
   }
 }

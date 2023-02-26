@@ -104,7 +104,9 @@ export async function parseEmlDir(dirname: string) {
 
         if (pathIsFile) {
             const data = await parseEml(realPath);
-            arr.push(data);
+            if (data.from) {
+                arr.push(data);
+            }
         }
     }
 

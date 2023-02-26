@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import isFile from "@aibulat/isfile";
 
-import { sendEmlFile } from "./smtp.js";
+import { sendEmlFile, smtpPing } from "./smtp.js";
 
 import { pingOptions, sendOptions } from "./types.js";
 
@@ -23,10 +23,13 @@ program
     .option("--subject", "Subject", "Hallar nisek?")
     .option("--text", "Text", "Test Message")
     .option("--debug", "Show debug output for SMTP conversation")
-    .action((options: pingOptions) => {
+    .action(async (options: pingOptions) => {
         console.log(options);
         console.log(options.sender);
         console.log(options.rcpt);
+
+        const res = await smtpPing(options);
+        console.log(res);
     });
 
 program

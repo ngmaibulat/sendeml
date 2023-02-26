@@ -1,7 +1,12 @@
 import fs from "node:fs/promises";
+import path from "node:path";
+
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
-import { smtpAuth, smtpOptions } from "./types.js";
+
+import { simpleParser, ParsedMail } from "mailparser";
+import { smtpAuth, smtpOptions, pingOptions } from "./types.js";
+import { isDir } from "./dir.js";
 
 dotenv.config();
 
@@ -49,4 +54,54 @@ export async function sendEmlFile(filename: string, from: string, to: string[]) 
     // send email
     const transport = getSmtpTransport();
     await transport.sendMail(message);
+}
+
+export async function smtpPing(options: pingOptions) {
+    const envelope = {
+        from: options.sender,
+        to: [options.rcpt],
+    };
+    const raw = `From: ${options.sender}
+To: ${options.rcpt}
+Subject: ${options.subject}
+
+${options.text}
+`;
+    const message = { envelope, raw };
+
+    // send email
+    const transport = getSmtpTransport();
+    const res = await transport.sendMail(message);
+    return res;
+}
+
+export async function parseEml(filename: string): Promise<ParsedMail> {
+    const emlContents = await fs.readFile(filename, "utf-8");
+    const res = simpleParser(emlContents);
+    return res;
+}
+
+export async function parseEmlDir(dirname: string) {
+    if (!dirname) {
+        throw new Error(`Invalid dirname argument`);
+    }
+
+    if (typeof dirname != "string") {
+        throw new Error(`Invalid dirname argument`);
+    }
+
+    if (!isDir(dirname)) {
+        throw new Error(`Directory does not exist: ${dirname}`);
+    }
+
+    const arr = [];
+    const files = await fs.readdir(dirname);
+
+    for (const file of files) {
+        const realPath = path.resolve(dirname, file);
+        const data = await parseEml(realPath);
+        arr.push(data);
+    }
+
+    return arr;
 }

@@ -1,4 +1,3 @@
-- cli args
 - send from dir
 - publish, test as npx
 - publish from github actions

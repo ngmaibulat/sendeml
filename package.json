@@ -1,30 +1,35 @@
 {
-    "name": "sendeml",
-    "version": "0.0.1",
-    "description": "Send raw eml files to SMTP server specified via env vars or .env file",
-    "main": "dist/index.js",
-    "bin": "dist/index.js",
-    "type": "module",
-    "scripts": {
-        "test": "echo 0",
-        "build": "tsc",
-        "build:watch": "tsc -w",
-        "start": "node dist/index.js",
-        "dev": "node dist/index.js"
-    },
-    "keywords": [
-        "SMTP",
-        "Email",
-        "eml"
-    ],
-    "author": "Aibulat",
-    "license": "MIT",
-    "dependencies": {
-        "@aibulat/isfile": "^0.0.4",
-        "@colors/colors": "^1.5.0",
-        "@types/nodemailer": "^6.4.7",
-        "commander": "^10.0.0",
-        "dotenv": "^16.0.3",
-        "nodemailer": "^6.9.1"
-    }
+  "name": "sendeml",
+  "version": "0.0.1",
+  "description": "Send raw eml files to SMTP server specified via env vars or .env file",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test | tap-spec",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "start": "node dist/index.js",
+    "dev": "node dist/index.js"
+  },
+  "keywords": [
+    "SMTP",
+    "Email",
+    "eml"
+  ],
+  "author": "Aibulat",
+  "license": "MIT",
+  "dependencies": {
+    "@aibulat/isfile": "^0.0.4",
+    "@colors/colors": "^1.5.0",
+    "@types/mailparser": "^3.4.0",
+    "@types/nodemailer": "^6.4.7",
+    "commander": "^10.0.0",
+    "dotenv": "^16.0.3",
+    "mailparser": "^3.6.3",
+    "nodemailer": "^6.9.1"
+  },
+  "devDependencies": {
+    "tap-spec": "^5.0.0"
+  }
 }

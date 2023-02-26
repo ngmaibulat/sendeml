@@ -1,0 +1,5 @@
+- view dir of eml files
+- generate PII with Faker
+- send from dir
+- hview
+- hsend

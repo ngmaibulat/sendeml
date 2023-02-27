@@ -1,29 +1,17 @@
 import { ParsedMail } from "mailparser";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { isDir } from "./dir.js";
+import { isDir } from "./utils/dir.js";
 import { tableEmails } from "./table.js";
 import { parseEmlDir } from "./smtp.js";
 
-import { faker } from "@faker-js/faker";
+import { readHQueueFile } from "./haraka/hqueue.js";
+import { sendEml } from "./smtp.js";
 
-const numberOfRecords = 100;
-const fileName = "fake_data.csv";
+const filename = "./queue/haraka/1676349832351_1676369986649_7_35_fl96Rc_8_c21194a1a5c3";
 
-// Define the header for the CSV file
-const header = "FirstName, LastName, Email, Phone, Card, IBAN\n";
+const res = readHQueueFile(filename);
 
-// Generate the fake PII data
-let fakeData = "";
-for (let i = 0; i < numberOfRecords; i++) {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    const email = faker.internet.email(firstName, lastName);
-    const phoneNumber = faker.phone.number();
-    const card = faker.finance.creditCardNumber();
-    const iban = faker.finance.iban();
-    fakeData += `${firstName}, ${lastName}, ${email}, ${phoneNumber}, ${card}, ${iban}\n`;
-}
+// await sendEml(res.eml, res.mail_from.original, ["test@demo.com"]);
 
-// Write the data to a file
-await fs.writeFile(fileName, header + fakeData);
+console.log(res);

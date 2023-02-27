@@ -6,7 +6,7 @@ import nodemailer from "nodemailer";
 
 import { simpleParser, ParsedMail } from "mailparser";
 import { smtpAuth, smtpOptions, pingOptions } from "./types.js";
-import { isDir } from "./dir.js";
+import { isDir } from "./utils/dir.js";
 import isFile from "@aibulat/isfile";
 
 dotenv.config();
@@ -44,6 +44,17 @@ export function getSmtpTransport() {
     const options = getSmtpOptions();
     const transport = nodemailer.createTransport(options);
     return transport;
+}
+
+export async function sendEml(eml: string, from: string, to: string[]) {
+    const envelope = { from, to };
+    const message = { envelope, raw: eml };
+
+    console.log(message);
+
+    // send email
+    const transport = getSmtpTransport();
+    await transport.sendMail(message);
 }
 
 export async function sendEmlFile(filename: string, from: string, to: string[]) {

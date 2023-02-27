@@ -1,10 +1,12 @@
 import { Command } from "commander";
 import isFile from "@aibulat/isfile";
 
-import { isDir, lsDir } from "./dir.js";
+import { isDir, lsDir } from "./utils/dir.js";
 import { sendEmlFile, smtpPing } from "./smtp.js";
 import { tableEmails } from "./table.js";
-import { parseEmlDir } from "./smtp.js";
+import { parseEmlDir, sendEml } from "./smtp.js";
+
+import { readHQueueFile } from "./haraka/hqueue.js";
 
 import { pingOptions, sendOptions, lsOptions, sendDirOptions } from "./types.js";
 
@@ -86,6 +88,39 @@ program
 
         for (const item of filesToProcess) {
             await sendEmlFile(item, options.sender, [options.rcpt]);
+            console.log(`Sent: ${item}`);
+        }
+    });
+
+program
+    .command("hsenddir")
+    .description("Send eml files from a Haraka Queue dir")
+    .requiredOption("-d, --dir <dir>", "Haraka Queue dir")
+    .option("--max <max>", "Send first <max> amount of emails")
+    .action(async (options: sendDirOptions) => {
+        const dirFound = await isDir(options.dir);
+
+        if (!dirFound) {
+            console.error(`Dir not found: ${options.dir}`);
+            process.exit(1);
+        }
+
+        const files = await lsDir(options.dir, true);
+
+        let filesToProcess = [];
+
+        if (options.max) {
+            filesToProcess = files.slice(0, options.max);
+        } else {
+            filesToProcess = files;
+        }
+
+        // console.log(files);
+        // console.log(filesToProcess);
+
+        for (const item of filesToProcess) {
+            const res = readHQueueFile(item);
+            await sendEml(res.eml, res.mail_from.original, ["test@demo.com"]);
             console.log(`Sent: ${item}`);
         }
     });

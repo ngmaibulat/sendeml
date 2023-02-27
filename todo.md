@@ -1,13 +1,3 @@
-- send from dir
-- publish, test as npx
-- publish from github actions
-- basic docs
-
-### Support Haraka Queue
-
-- send Haraka queue file
-- send Haraka queue dir
-
 ### Send via API:
 
 - send via AWS SES
@@ -56,8 +46,6 @@
 
 ### Generate
 
-- PII
-- PCI
 - Links from phishtank
 - Links/files from malshare
 

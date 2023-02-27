@@ -50,8 +50,6 @@ export async function sendEml(eml: string, from: string, to: string[]) {
     const envelope = { from, to };
     const message = { envelope, raw: eml };
 
-    console.log(message);
-
     // send email
     const transport = getSmtpTransport();
     await transport.sendMail(message);

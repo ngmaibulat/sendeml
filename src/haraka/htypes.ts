@@ -10,14 +10,7 @@ export type QueueElement = {
     ageHours: number;
 };
 
-export type MailFrom = {
-    original: string;
-    original_host: string;
-    host: string;
-    user: string;
-};
-
-export type Rcpt = {
+export type HarakaMailAddr = {
     original: string;
     original_host: string;
     host: string;
@@ -28,12 +21,14 @@ export type HQueueFile = {
     queue_time: number;
     dtQueue: Date;
     domain: string;
-    rcpt_to: Rcpt[];
-    mail_from: MailFrom;
+    rcpt_to: HarakaMailAddr[];
+    mail_from: HarakaMailAddr;
     notes: any;
     uuid: string;
     filename: string;
     fileinfo: QueueElement;
+    sender: string;
+    recipients: string[];
     eml: string;
 };
 

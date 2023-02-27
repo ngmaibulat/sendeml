@@ -1,7 +1,9 @@
 // Haraka Queueu Utils
 
 import fs from "node:fs";
-import { HQueueFile, QueueElement } from "./htypes.js";
+import path from "node:path";
+
+import { HQueueFile, QueueElement, HarakaMailAddr } from "./htypes.js";
 import { tstampToDate, getTimeDiffSeconds, getTimeDiffHours } from "../utils/time.js";
 
 export function parseFilename(filename: string): QueueElement {
@@ -9,18 +11,21 @@ export function parseFilename(filename: string): QueueElement {
         throw new Error("No filename provided");
     }
 
-    let p = filename.split("_");
+    const basename = path.basename(filename);
+    const p = basename.split("_");
+    const timeArrival = parseInt(p[0]);
+    const timeNext = parseInt(p[1]);
 
     const res: QueueElement = {
-        dtArrival: tstampToDate(parseInt(p[0])),
-        dtNextAttempt: tstampToDate(parseInt(p[1])),
+        dtArrival: tstampToDate(timeArrival),
+        dtNextAttempt: tstampToDate(timeNext),
         attempts: +p[2],
         pid: +p[3],
         uniq: p[4],
         counter: +p[5],
         host: p[6],
-        ageSeconds: getTimeDiffSeconds(parseInt(p[0])),
-        ageHours: getTimeDiffHours(parseInt(p[0])),
+        ageSeconds: getTimeDiffSeconds(timeArrival),
+        ageHours: getTimeDiffHours(timeArrival),
     };
 
     return res;
@@ -44,10 +49,28 @@ function readEml(buff: Buffer, len: number): string {
     return strVal;
 }
 
+function getAddr(addr: HarakaMailAddr): string {
+    return addr.user + "@" + addr.host;
+}
+
+function getAddrList(addrs: HarakaMailAddr[]): string[] {
+    const res: string[] = [];
+
+    for (const item of addrs) {
+        res.push(getAddr(item));
+    }
+
+    return res;
+}
+
 export function readHQueueFile(file: string): HQueueFile {
     const data = fs.readFileSync(file);
     const ln = readLen(data);
     const obj = readJson(data, ln);
+
+    obj.sender = getAddr(obj.mail_from);
+    obj.recipients = getAddrList(obj.rcpt_to);
+
     obj.eml = readEml(data, ln);
 
     obj.dtQueue = new Date();

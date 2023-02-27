@@ -8,7 +8,7 @@ import { parseEmlDir, sendEml } from "./smtp.js";
 
 import { readHQueueFile } from "./haraka/hqueue.js";
 
-import { pingOptions, sendOptions, lsOptions, sendDirOptions } from "./types.js";
+import { pingOptions, sendOptions, lsOptions, sendDirOptions, viewOptions } from "./types.js";
 
 const program = new Command();
 
@@ -97,6 +97,7 @@ program
     .description("Send eml files from a Haraka Queue dir")
     .requiredOption("-d, --dir <dir>", "Haraka Queue dir")
     .option("--max <max>", "Send first <max> amount of emails")
+    .option("--moveto <dir>", "Move sent files to <dir>")
     .action(async (options: sendDirOptions) => {
         const dirFound = await isDir(options.dir);
 
@@ -120,9 +121,25 @@ program
 
         for (const item of filesToProcess) {
             const res = readHQueueFile(item);
-            await sendEml(res.eml, res.mail_from.original, ["test@demo.com"]);
+            await sendEml(res.eml, res.sender, res.recipients);
             console.log(`Sent: ${item}`);
         }
+    });
+
+program
+    .command("hview")
+    .description("View file from Haraka Queue dir")
+    .requiredOption("-f, --file <path>", "Haraka Queue item")
+    .action(async (options: viewOptions) => {
+        const found = await isFile(options.file);
+
+        if (!found) {
+            console.error(`File not found: ${options.file}`);
+            process.exit(1);
+        }
+
+        const res = readHQueueFile(options.file);
+        console.log(res);
     });
 
 program

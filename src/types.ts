@@ -34,3 +34,7 @@ export type sendDirOptions = {
 export type lsOptions = {
     dir: string;
 };
+
+export type viewOptions = {
+    file: string;
+};

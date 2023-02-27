@@ -1,5 +1,3 @@
-- generate PII with Faker
-- generate PCI with Faker
-- send from dir
-- hview
-- hsend
+- publish, test as npx
+- publish from github actions
+- basic docs

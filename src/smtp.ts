@@ -9,6 +9,8 @@ import { smtpAuth, smtpOptions, pingOptions } from "./types.js";
 import { isDir } from "./utils/dir.js";
 import isFile from "@aibulat/isfile";
 
+import { logger } from "./logger.js";
+
 dotenv.config();
 
 export function getSmtpPort(): number {
@@ -52,7 +54,8 @@ export async function sendEml(eml: string, from: string, to: string[]) {
 
     // send email
     const transport = getSmtpTransport();
-    await transport.sendMail(message);
+    const res = await transport.sendMail(message);
+    logger.info(res);
 }
 
 export async function sendEmlFile(filename: string, from: string, to: string[]) {
@@ -63,7 +66,8 @@ export async function sendEmlFile(filename: string, from: string, to: string[]) 
 
     // send email
     const transport = getSmtpTransport();
-    await transport.sendMail(message);
+    const res = await transport.sendMail(message);
+    logger.info(res);
 }
 
 export async function smtpPing(options: pingOptions) {

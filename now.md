@@ -1,9 +1,11 @@
-- Move after sending
 - winston logging: reply from dst server
-- Handle temp errors
-- Handle hard failures
+- Handle soft bounces
+- Handle hard bounces
+- Handle connection errors
 
 - Test as npx
-- Test with failed smtp
 - publish from github actions
 - basic docs
+
+- Yaml config
+- Watch + Send

@@ -1,4 +1,5 @@
-import { isDir, lsDir } from "../utils/dir.js";
+import path from "node:path";
+import { isDir, lsDir, moveFile } from "../utils/dir.js";
 
 import { sendEml } from "../smtp.js";
 
@@ -31,5 +32,14 @@ export async function actionHSendDir(options: sendDirOptions) {
         const res = readHQueueFile(item);
         await sendEml(res.eml, res.sender, res.recipients);
         console.log(`Sent: ${item}`);
+
+        const basename = path.basename(item);
+        const newPath = path.resolve(options.moveDest, basename);
+
+        const moved = await moveFile(item, newPath);
+
+        if (!moved) {
+            console.error(`Could not move file: ${basename}`);
+        }
     }
 }

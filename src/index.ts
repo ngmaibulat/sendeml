@@ -42,6 +42,7 @@ program
     .requiredOption("-s, --sender <sender>", "sender address", "sender@example.com")
     .requiredOption("-r, --rcpt <rcpt>", "recipient address", "recipient@example.com")
     .requiredOption("-d, --dir <dir>", "directory with eml files")
+    .requiredOption("-m, --moveDest <dir>", "directory where to move sent files")
     .option("--max <max>", "Send first <max> amount of emails")
     .action(actionSendDir);
 
@@ -49,6 +50,7 @@ program
     .command("hsenddir")
     .description("Send eml files from a Haraka Queue dir")
     .requiredOption("-d, --dir <dir>", "Haraka Queue dir")
+    .requiredOption("-m, --moveDest <dir>", "directory where to move sent files")
     .option("--max <max>", "Send first <max> amount of emails")
     .option("--moveto <dir>", "Move sent files to <dir>")
     .action(actionHSendDir);

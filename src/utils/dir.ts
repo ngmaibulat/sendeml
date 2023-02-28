@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { PathLike } from "node:fs";
 import path from "node:path";
 import isFile from "@aibulat/isfile";
 
@@ -42,4 +43,13 @@ export async function lsDir(dirname: string, filesOnly: boolean = false) {
     }
 
     return files;
+}
+
+export async function moveFile(src: PathLike, dst: PathLike): Promise<boolean> {
+    try {
+        await fs.rename(src, dst);
+        return true;
+    } catch (err: any) {
+        return false;
+    }
 }

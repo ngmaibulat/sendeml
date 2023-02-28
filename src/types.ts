@@ -29,6 +29,7 @@ export type sendDirOptions = {
     rcpt: string;
     dir: string;
     max?: number;
+    moveDest: string;
 };
 
 export type lsOptions = {

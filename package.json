@@ -29,7 +29,8 @@
     "dotenv": "^16.0.3",
     "emailjs": "^4.0.1",
     "mailparser": "^3.6.3",
-    "nodemailer": "^6.9.1"
+    "nodemailer": "^6.9.1",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/mailparser": "^3.4.0",

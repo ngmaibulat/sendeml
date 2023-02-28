@@ -13,7 +13,7 @@ const program = new Command();
 
 const name = "sendeml";
 const description = "Send raw eml files to SMTP server specified via env vars or .env file";
-const version = "0.0.1";
+const version = "0.0.5";
 
 program.name(name).description(description).version(version);
 

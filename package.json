@@ -1,6 +1,6 @@
 {
   "name": "@aibulat/sendeml",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Send raw eml files to SMTP server specified via env vars or .env file",
   "main": "dist/index.js",
   "bin": "dist/index.js",

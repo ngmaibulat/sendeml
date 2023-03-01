@@ -1,4 +1,6 @@
 import path from "node:path";
+import color from "@colors/colors";
+
 import { isDir, lsDir, moveFile } from "../utils/dir.js";
 import { sendEmlFile, smtpPing } from "../smtp.js";
 
@@ -31,8 +33,16 @@ export async function actionSendDir(options: sendDirOptions) {
     }
 
     for (const item of filesToProcess) {
-        await sendEmlFile(item, options.sender, [options.rcpt]);
-        console.log(`Sent: ${item}`);
+        const sent = await sendEmlFile(item, options.sender, [options.rcpt]);
+
+        if (!sent) {
+            const msg = color.red(`Fail/skip: ${item}`);
+            console.log(msg);
+            continue;
+        }
+
+        const msg = color.yellow(`Sent: ${item}`);
+        console.log(msg);
 
         const basename = path.basename(item);
         const newPath = path.resolve(options.moveDest, basename);
@@ -44,4 +54,8 @@ export async function actionSendDir(options: sendDirOptions) {
             logger.error(msg);
         }
     }
+
+    // logger.close();
+
+    process.exit(0);
 }

@@ -11,7 +11,9 @@
     "build:watch": "tsc -w",
     "start": "node dist/index.js",
     "dev": "node dist/index.js",
-    "spamsource": "echo http://untroubled.org/spam/"
+    "spamsource": "echo http://untroubled.org/spam/",
+    "mailhog": "mailhog -invite-jim -jim-accept 0.3 -jim-reject-recipient 0.3 -jim-reject-sender 0.3",
+    "install:mailhog": "brew install mailhog"
   },
   "keywords": [
     "SMTP",
@@ -20,6 +22,14 @@
   ],
   "author": "Aibulat",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngmaibulat/sendeml.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ngmaibulat/sendeml/issues"
+  },
+  "homepage": "https://github.com/ngmaibulat/sendeml#readme",
   "dependencies": {
     "@aibulat/isfile": "^0.0.4",
     "@colors/colors": "^1.5.0",
@@ -30,11 +40,13 @@
     "emailjs": "^4.0.1",
     "mailparser": "^3.6.3",
     "nodemailer": "^6.9.1",
+    "smtp-server": "^3.11.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
     "@types/mailparser": "^3.4.0",
     "@types/nodemailer": "^6.4.7",
+    "@types/smtp-server": "^3.5.7",
     "tap-spec": "^5.0.0"
   }
 }

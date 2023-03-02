@@ -5,11 +5,11 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 
 import { simpleParser, ParsedMail } from "mailparser";
-import { smtpAuth, smtpOptions, pingOptions } from "./types.js";
-import { isDir } from "./utils/dir.js";
+import { smtpAuth, smtpOptions, pingOptions } from "../types.js";
+import { isDir } from "../utils/dir.js";
 import isFile from "@aibulat/isfile";
 
-import { logger } from "./logger.js";
+import { logger } from "../logger.js";
 
 dotenv.config();
 

@@ -3,9 +3,10 @@
 - Handle hard bounces
 - Handle connection errors
 
-- Test as npx
 - publish from github actions
 - basic docs
 
 - Yaml config
 - Watch + Send
+
+- send from markdown dir

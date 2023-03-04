@@ -5,6 +5,15 @@ import { moveFile } from "./utils/dir.js";
 
 import { logger } from "./logger.js";
 
-logger.info("Salam!");
+import { Mailsend } from "./mailsend/Mailsend.js";
+import { stringLoader } from "./mailsend/loader/simple.js";
 
-logger.error("Exception");
+const mails = ["one", "two", "Three"];
+
+const loader = stringLoader(mails);
+
+const sender = new Mailsend(loader);
+
+sender.send();
+
+await sender.run();
